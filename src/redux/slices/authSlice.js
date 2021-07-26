@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
+import { setAlert } from './alertSlice';
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -17,7 +18,7 @@ const auth = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
     },
-    loginFailure: (state, action) => {
+    loginFailure: (state) => {
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
@@ -49,6 +50,12 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loginSuccess(res.data.token));
     dispatch(loadUser());
   } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
     dispatch(loginFailure());
   }
 };
