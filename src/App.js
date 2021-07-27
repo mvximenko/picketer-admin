@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import store from './redux/store';
 import { loadUser } from './redux/slices/authSlice';
 import setAuthToken from './utils/setAuthToken';
 import Login from './components/auth/Login';
+import PrivateRoute from './components/routing/PrivateRoute';
 import { GlobalStyle } from './GlobalStyles';
 
 if (localStorage.token) {
@@ -15,14 +15,14 @@ export default function App() {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
+
   return (
     <>
       <GlobalStyle />
-      <Provider store={store}>
-        <Switch>
-          <Route exact path='/login' component={Login} />
-        </Switch>
-      </Provider>
+      <Switch>
+        <PrivateRoute exact path='/' component={() => <h1>Private Route</h1>} />
+        <Route exact path='/login' component={Login} />
+      </Switch>
     </>
   );
 }
