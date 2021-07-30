@@ -5,6 +5,7 @@ import { loadUser } from './redux/slices/authSlice';
 import setAuthToken from './utils/setAuthToken';
 import Login from './components/auth/Login';
 import Posts from './components/posts/Posts';
+import Users from './components/users/Users';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { GlobalStyle } from './GlobalStyles';
 
@@ -22,6 +23,7 @@ export default function App() {
       <GlobalStyle />
       <Switch>
         <PrivateRoute exact path='/' component={Posts} />
+        <PrivateRoute exact path='/users' component={Users} />
         <Route exact path='/login' component={Login} />
       </Switch>
     </>
