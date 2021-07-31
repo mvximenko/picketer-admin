@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getPosts } from '../../redux/slices/postSlice';
-import PostsItem from './PostsItem';
+import PostItem from './PostItem';
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function Posts() {
       <h1>Events</h1>
 
       {posts.map((post) => (
-        <PostsItem key={post._id} post={post} />
+        <PostItem key={post._id} post={post} />
       ))}
     </>
   );

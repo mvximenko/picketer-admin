@@ -1,8 +1,8 @@
 import React from 'react';
 import Moment from 'react-moment';
-import { Container } from './PostsItemStyles';
+import { Container } from './PostItemStyles';
 
-export default function PostsItem({ post: { text, location, date } }) {
+export default function PostItem({ post: { text, location, date } }) {
   return (
     <Container>
       <p>{text}</p>

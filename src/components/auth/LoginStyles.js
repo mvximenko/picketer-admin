@@ -22,7 +22,6 @@ export const Form = styled.form`
 `;
 
 export const Heading = styled.h1`
-  color: #384047;
   font-weight: bold;
   text-align: center;
   line-height: 1.5em;
