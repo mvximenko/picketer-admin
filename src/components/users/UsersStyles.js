@@ -6,6 +6,19 @@ export const Container = styled.div`
   max-width: 800px;
 `;
 
+export const Top = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Heading = styled.h1`
+  cursor: pointer;
+`;
+
+export const Input = styled.input`
+  margin: auto 0;
+`;
+
 export const Table = styled.div`
   width: 100%;
   display: table;

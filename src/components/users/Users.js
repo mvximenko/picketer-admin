@@ -1,21 +1,59 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getUsers } from '../../redux/slices/userSlice';
-import { Container, Table, Row, Cell } from './UsersStyles';
+import {
+  Container,
+  Top,
+  Heading,
+  Input,
+  Table,
+  Row,
+  Cell,
+} from './UsersStyles';
 
 export default function Users() {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.users, shallowEqual);
+  const [value, setValue] = useState('');
+  const [archive, setArchive] = useState(false);
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    const timeout = setTimeout(() => {
+      if (archive) {
+        dispatch(getUsers('/archive'));
+        return;
+      }
+
+      if (value) {
+        dispatch(getUsers(`?name=${value}`));
+        return;
+      }
+
+      dispatch(getUsers());
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [archive, value, dispatch]);
 
   return (
     <Container>
-      <h1>Active</h1>
+      <Top>
+        <Heading onClick={() => setArchive(!archive)}>
+          {archive ? 'Archive' : 'Active'}
+        </Heading>
+
+        {!archive && (
+          <Input
+            type='text'
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder='Search for...'
+          />
+        )}
+      </Top>
+
       <Table>
         <Row header>
           <Cell>Name</Cell>
@@ -23,7 +61,6 @@ export default function Users() {
           <Cell>Date</Cell>
           <Cell>Role</Cell>
         </Row>
-
         {users.map((user) => (
           <Row key={user.email}>
             <Cell data-title='Name'>

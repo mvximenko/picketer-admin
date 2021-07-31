@@ -25,9 +25,9 @@ const user = createSlice({
 
 export const { getUsersSuccess, getUsersFailure } = user.actions;
 
-export const getUsers = () => async (dispatch) => {
+export const getUsers = (query) => async (dispatch) => {
   try {
-    const res = await api.get('/users');
+    const res = await api.get(query ? `/users${query}` : '/users');
     dispatch(getUsersSuccess(res.data));
   } catch (err) {
     dispatch(
