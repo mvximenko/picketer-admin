@@ -13,6 +13,9 @@ export const Top = styled.div`
 
 export const Heading = styled.h1`
   cursor: pointer;
+  &:hover {
+    color: #57646e;
+  }
 `;
 
 export const Input = styled.input`
@@ -31,15 +34,19 @@ export const Table = styled.div`
 export const Row = styled.div`
   display: table-row;
   background: #f6f6f6;
+  cursor: pointer;
   &:nth-of-type(odd) {
     background: #e9e9e9;
   }
-
+  &:hover {
+    background: #d1d1d1;
+  }
   ${({ header }) =>
     header &&
     `
     font-weight: bold; 
     color: #ffffff;  
+    cursor: default;
     &:first-child { 
       background: #4bc970; 
     }

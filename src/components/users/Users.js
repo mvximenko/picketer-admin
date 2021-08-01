@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Moment from 'react-moment';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
@@ -14,6 +15,7 @@ import {
 } from './UsersStyles';
 
 export default function Users() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.users, shallowEqual);
   const [value, setValue] = useState('');
@@ -36,6 +38,10 @@ export default function Users() {
 
     return () => clearTimeout(timeout);
   }, [archive, value, dispatch]);
+
+  const handleRowClick = (id) => {
+    history.push(`/user/${id}`);
+  };
 
   return (
     <Container>
@@ -62,7 +68,7 @@ export default function Users() {
           <Cell>Role</Cell>
         </Row>
         {users.map((user) => (
-          <Row key={user.email}>
+          <Row key={user.email} onClick={() => handleRowClick(user._id)}>
             <Cell data-title='Name'>
               {user.surname} {user.name} {user.patronymic}
             </Cell>

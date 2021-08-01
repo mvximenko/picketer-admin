@@ -2,7 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
 const initialState = {
-  user: null,
+  user: {
+    name: '',
+    surname: '',
+    patronymic: '',
+    email: '',
+    role: '',
+  },
   users: [],
   loading: true,
   error: {},
@@ -20,10 +26,27 @@ const user = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    getUserSuccess: (state, action) => {
+      state.user = action.payload;
+      state.loading = false;
+    },
+    getUserFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    resetUser: (state) => {
+      state.user = initialState.user;
+    },
   },
 });
 
-export const { getUsersSuccess, getUsersFailure } = user.actions;
+export const {
+  getUsersSuccess,
+  getUsersFailure,
+  getUserSuccess,
+  getUserFailure,
+  resetUser,
+} = user.actions;
 
 export const getUsers = (query) => async (dispatch) => {
   try {
@@ -32,6 +55,20 @@ export const getUsers = (query) => async (dispatch) => {
   } catch (err) {
     dispatch(
       getUsersFailure({
+        msg: err.response.statusText,
+        status: err.response.status,
+      })
+    );
+  }
+};
+
+export const getUser = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/users/user/${id}`);
+    dispatch(getUserSuccess(res.data));
+  } catch (err) {
+    dispatch(
+      getUserFailure({
         msg: err.response.statusText,
         status: err.response.status,
       })
