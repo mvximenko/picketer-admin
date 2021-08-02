@@ -9,6 +9,7 @@ import {
   Top,
   Heading,
   Input,
+  Link,
   Table,
   Row,
   Cell,
@@ -58,6 +59,8 @@ export default function Users() {
             placeholder='Search for...'
           />
         )}
+
+        <Link to='/create-user'>Create New User</Link>
       </Top>
 
       <Table>

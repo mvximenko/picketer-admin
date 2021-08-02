@@ -26,6 +26,7 @@ export default function App() {
         <PrivateRoute exact path='/' component={Posts} />
         <PrivateRoute exact path='/users' component={Users} />
         <PrivateRoute exact path='/user/:id' component={UserForm} />
+        <PrivateRoute exact path='/create-user' component={UserForm} />
         <Route exact path='/login' component={Login} />
       </Switch>
     </>
