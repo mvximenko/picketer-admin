@@ -8,6 +8,7 @@ const initialState = {
     patronymic: '',
     email: '',
     role: '',
+    password: '',
   },
   users: [],
   loading: true,
@@ -34,6 +35,9 @@ const user = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    updateUser: (state, action) => {
+      state.user[action.payload.name] = action.payload.value;
+    },
     resetUser: (state) => {
       state.user = initialState.user;
     },
@@ -45,6 +49,7 @@ export const {
   getUsersFailure,
   getUserSuccess,
   getUserFailure,
+  updateUser,
   resetUser,
 } = user.actions;
 

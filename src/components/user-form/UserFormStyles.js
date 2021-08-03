@@ -34,18 +34,27 @@ export const Heading = styled.h1`
   margin-bottom: 30px;
 `;
 
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 35px;
+  @media (max-width: 580px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+`;
+
 export const Input = styled.input`
   ${input}
 `;
 
 export const Select = styled.select`
   ${input}
-  color: #757575;
 `;
 
 export const InputSubmit = styled.input.attrs({
   type: 'submit',
-  value: 'Add User',
 })`
   width: 100%;
   padding: 14px;
@@ -67,13 +76,9 @@ export const InputSubmit = styled.input.attrs({
   }
 `;
 
-export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-bottom: 35px;
-  @media (max-width: 580px) {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+export const Span = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
 `;
