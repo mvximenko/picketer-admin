@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
+import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getUser, resetUser, updateUser } from '../../redux/slices/userSlice';
@@ -31,21 +32,23 @@ export default function UserForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
+      const hasEmptyFields = Object.values(user).some((value) => value === '');
 
-    const hasEmptyFields = Object.values(user).some((value) => value === '');
-
-    if (hasEmptyFields) {
-      console.log('Please fill in all fields', hasEmptyFields);
-      return;
+      if (hasEmptyFields) {
+        toast.error('Please fill in all fields');
+      } else if (id) {
+        await api.put('/users/user', user);
+        toast.success('User updated');
+      } else {
+        await api.post('/users', user);
+        toast.success('User created');
+        dispatch(resetUser());
+      }
+    } catch (err) {
+      toast.error(err.toString());
     }
-
-    if (id) {
-      await api.put('/users/user', user);
-      return;
-    }
-
-    await api.post('/users', user);
   };
 
   return (
@@ -103,7 +106,7 @@ export default function UserForm() {
             />
           )}
         </Grid>
-        <InputSubmit type='submit' value={id ? 'Update User' : 'Add User'} />
+        <InputSubmit type='submit' value={id ? 'Edit User' : 'Add User'} />
       </form>
     </Container>
   );

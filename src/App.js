@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import store from './redux/store';
 import { loadUser } from './redux/slices/authSlice';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import setAuthToken from './utils/setAuthToken';
 import Login from './components/auth/Login';
 import Posts from './components/posts/Posts';
@@ -22,6 +24,7 @@ export default function App() {
   return (
     <>
       <GlobalStyle />
+      <ToastContainer />
       <Switch>
         <PrivateRoute exact path='/' component={Posts} />
         <PrivateRoute exact path='/users' component={Users} />

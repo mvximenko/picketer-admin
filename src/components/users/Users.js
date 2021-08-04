@@ -26,15 +26,11 @@ export default function Users() {
     const timeout = setTimeout(() => {
       if (archive) {
         dispatch(getUsers('/archive'));
-        return;
-      }
-
-      if (value) {
+      } else if (value) {
         dispatch(getUsers(`?name=${value}`));
-        return;
+      } else {
+        dispatch(getUsers());
       }
-
-      dispatch(getUsers());
     }, 500);
 
     return () => clearTimeout(timeout);
