@@ -53,9 +53,7 @@ export const Select = styled.select`
   ${input}
 `;
 
-export const InputSubmit = styled.input.attrs({
-  type: 'submit',
-})`
+export const InputSubmit = styled.input`
   width: 100%;
   padding: 14px;
   margin: 10px 0;
@@ -74,6 +72,7 @@ export const InputSubmit = styled.input.attrs({
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
     transform: translateY(-4px);
   }
+  ${({ red }) => red && `background: #e74c3c`}
 `;
 
 export const Span = styled.span`
@@ -81,4 +80,16 @@ export const Span = styled.span`
   align-items: center;
   justify-content: center;
   font-weight: 500;
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  input + input {
+    margin-left: 30px;
+  }
+  @media (max-width: 580px) {
+    input + input {
+      margin-left: 10px;
+    }
+  }
 `;

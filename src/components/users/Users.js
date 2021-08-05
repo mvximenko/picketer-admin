@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Moment from 'react-moment';
+import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getUsers } from '../../redux/slices/userSlice';
@@ -37,7 +38,11 @@ export default function Users() {
   }, [archive, value, dispatch]);
 
   const handleRowClick = (id) => {
-    history.push(`/user/${id}`);
+    if (archive) {
+      toast.error(`You can't edit archived users`);
+    } else {
+      history.push(`/user/${id}`);
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
@@ -13,10 +13,12 @@ import {
   Select,
   InputSubmit,
   Span,
+  Wrapper,
 } from './UserFormStyles';
 
 export default function UserForm() {
   const { id } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.user.user, shallowEqual);
@@ -46,6 +48,16 @@ export default function UserForm() {
         toast.success('User created');
         dispatch(resetUser());
       }
+    } catch (err) {
+      toast.error(err.toString());
+    }
+  };
+
+  const archiveUser = async (id) => {
+    try {
+      await api.put('/users/archive', { id });
+      toast.success('User archived');
+      history.push(`/users`);
     } catch (err) {
       toast.error(err.toString());
     }
@@ -106,7 +118,17 @@ export default function UserForm() {
             />
           )}
         </Grid>
-        <InputSubmit type='submit' value={id ? 'Edit User' : 'Add User'} />
+        <Wrapper>
+          {id && (
+            <InputSubmit
+              onClick={() => archiveUser(id)}
+              type='button'
+              value='Archive User'
+              red
+            />
+          )}
+          <InputSubmit type='submit' value={id ? 'Edit User' : 'Add User'} />
+        </Wrapper>
       </form>
     </Container>
   );
