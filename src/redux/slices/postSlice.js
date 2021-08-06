@@ -25,9 +25,9 @@ const post = createSlice({
 
 export const { getPostsSuccess, getPostsFailure } = post.actions;
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (query) => async (dispatch) => {
   try {
-    const res = await api.get('/posts');
+    const res = await api.get(query ? `/posts${query}` : '/posts');
     dispatch(getPostsSuccess(res.data));
   } catch (err) {
     dispatch(
