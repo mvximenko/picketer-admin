@@ -33,7 +33,7 @@ export default function Posts() {
     if (archive) {
       toast.error(`You can't edit archived posts`);
     } else {
-      history.push(`/post/${id}`);
+      history.push(`/posts/${id}`);
     }
   };
 
