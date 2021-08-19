@@ -70,4 +70,10 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Any other custom service worker logic can go here.
+self.addEventListener('push', (event) => {
+  const data = event.data.json();
+  self.registration.showNotification(data.title, {
+    body: 'Picketer',
+    icon: 'https://raw.githubusercontent.com/mvximenko/youdo/master/public/logo192.png',
+  });
+});

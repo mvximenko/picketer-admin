@@ -10,12 +10,19 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
 
+import urlBase64ToUint8Array from './utils/urlBase64ToUint8Array';
+
+const publicVapidKey =
+  'BBBNRHL4eUQrGnwjCNxsN_8QJSVc4Ql4ClW-aKyDs_l9NIYAU1LwNtZOoAKwIJxLmrA1UtguUnwz8A2ucohkMdQ';
+
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
     window.location.hostname === '[::1]' ||
     // 127.0.0.0/8 are considered localhost for IPv4.
-    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    )
 );
 
 export function register(config) {
@@ -90,6 +97,9 @@ function registerValidSW(swUrl, config) {
           }
         };
       };
+      navigator.serviceWorker.ready.then((registration) => {
+        subscribeUserToPush(registration);
+      });
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
@@ -120,8 +130,27 @@ function checkValidServiceWorker(swUrl, config) {
       }
     })
     .catch(() => {
-      console.log('No internet connection found. App is running in offline mode.');
+      console.log(
+        'No internet connection found. App is running in offline mode.'
+      );
     });
+}
+
+async function subscribeUserToPush(registration) {
+  try {
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+    });
+
+    await fetch('http://localhost:5000/api/subscribe', {
+      method: 'POST',
+      body: JSON.stringify(subscription),
+      headers: { 'content-type': 'application/json' },
+    });
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 export function unregister() {
