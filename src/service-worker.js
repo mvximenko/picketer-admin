@@ -75,5 +75,22 @@ self.addEventListener('push', (event) => {
   self.registration.showNotification(data.title, {
     body: 'Picketer',
     icon: 'https://raw.githubusercontent.com/mvximenko/youdo/master/public/logo192.png',
+    vibrate: [100, 50, 100],
+    data: {
+      primaryKey: data.primaryKey,
+    },
   });
+});
+
+self.addEventListener('notificationclick', (event) => {
+  const notification = event.notification;
+  const primaryKey = notification.data.primaryKey;
+  const action = event.action;
+
+  if (action === 'close') {
+    notification.close();
+  } else {
+    clients.openWindow(`https://www.google.com/search?q=${primaryKey}`);
+    notification.close();
+  }
 });

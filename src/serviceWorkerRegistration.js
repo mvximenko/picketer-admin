@@ -138,16 +138,20 @@ function checkValidServiceWorker(swUrl, config) {
 
 async function subscribeUserToPush(registration) {
   try {
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
-    });
-
-    await fetch('http://localhost:5000/api/subscribe', {
-      method: 'POST',
-      body: JSON.stringify(subscription),
-      headers: { 'content-type': 'application/json' },
-    });
+    let subscription = await registration.pushManager.getSubscription();
+    if (subscription === null) {
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+      });
+      await fetch('http://localhost:5000/api/subscribe', {
+        method: 'POST',
+        body: JSON.stringify(subscription),
+        headers: { 'content-type': 'application/json' },
+      });
+    } else {
+      console.log(subscription, 'User is already subscribed');
+    }
   } catch (err) {
     console.error(err);
   }
