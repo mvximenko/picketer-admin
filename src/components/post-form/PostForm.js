@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
@@ -11,6 +11,7 @@ import {
   Grid,
   Input,
   InputSubmit,
+  Span,
   Wrapper,
   TextArea,
 } from './PostFormStyles';
@@ -19,8 +20,9 @@ export default function PostForm() {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
   const post = useSelector((state) => state.post.post, shallowEqual);
-  const { title, location, done, description } = post;
+  const { title, location, picketer, description } = post;
 
   useEffect(() => {
     if (id) dispatch(getPost(id));
@@ -31,14 +33,13 @@ export default function PostForm() {
     dispatch(updatePost({ name: e.target.name, value: e.target.value }));
   };
 
-  const onCheck = (e) => {
-    dispatch(updatePost({ name: e.target.name, value: e.target.checked }));
-  };
-
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const hasEmptyFields = Object.values(post).some((value) => value === '');
+
+      const hasEmptyFields = [title, location, description].some(
+        (value) => value === ''
+      );
 
       if (hasEmptyFields) {
         toast.error('Please fill in all fields');
@@ -46,7 +47,6 @@ export default function PostForm() {
         await api.put('/posts/post', post);
         toast.success('Post updated');
       } else {
-        console.log(post);
         await api.post('/posts', post);
         toast.success('Post created');
         dispatch(resetPost());
@@ -58,7 +58,7 @@ export default function PostForm() {
 
   const archivePost = async (id) => {
     try {
-      await api.put('/posts/archive', { id });
+      await api.put(`/posts/archive/${id}`);
       toast.success('Post archived');
       history.push(`/`);
     } catch (err) {
@@ -86,17 +86,18 @@ export default function PostForm() {
             onChange={onChange}
           />
 
-          {id && (
-            <div>
-              <input
-                id='done'
-                type='checkbox'
-                name='done'
-                checked={done}
-                onChange={onCheck}
-              />
-              <label htmlFor='done'>Done</label>
-            </div>
+          {!isOpen ? (
+            <Span onClick={() => setIsOpen(true)}>
+              {id ? 'Change Picketer' : 'Add Picketer'}
+            </Span>
+          ) : (
+            <Input
+              type='email'
+              name='picketer'
+              placeholder='Picketer Email'
+              value={picketer}
+              onChange={onChange}
+            />
           )}
         </Grid>
 
@@ -107,7 +108,7 @@ export default function PostForm() {
           value={description}
           onChange={onChange}
           placeholder='Description...'
-        ></TextArea>
+        />
 
         <Wrapper>
           {id && (

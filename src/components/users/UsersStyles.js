@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   padding: 40px;
@@ -28,7 +28,7 @@ export const Input = styled.input`
   margin: auto 0;
 `;
 
-export const Link = styled(RouterLink)`
+export const StyledLink = styled(Link)`
   color: #fff;
   background: #4bc970;
   font-weight: bold;
@@ -53,14 +53,11 @@ export const Table = styled.div`
 `;
 
 export const Row = styled.div`
+  width: 100%;
   display: table-row;
   background: #f6f6f6;
-  cursor: pointer;
   &:nth-of-type(odd) {
     background: #e9e9e9;
-  }
-  &:hover {
-    background: #d1d1d1;
   }
   ${({ header }) =>
     header &&
@@ -107,5 +104,13 @@ export const Cell = styled.div`
       color: #969696;
       display: block;
     }
+  }
+  ${({ width }) => width && `width: ${width}%;`}
+`;
+
+export const LinkEdit = styled(Link)`
+  cursor: pointer;
+  &:hover {
+    background: #d1d1d1;
   }
 `;

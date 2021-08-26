@@ -6,7 +6,7 @@ const initialState = {
   post: {
     title: '',
     location: '',
-    done: false,
+    picketer: '',
     description: '',
   },
   loading: true,

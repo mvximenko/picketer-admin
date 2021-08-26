@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
-import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getPosts } from '../../redux/slices/postSlice';
-import { Container } from './PostsStyles';
+import { Container, Info, StyledLink, LinkEdit } from './PostsStyles';
 
 export default function Posts() {
-  const history = useHistory();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.post.posts, shallowEqual);
   const [value, setValue] = useState('');
@@ -17,25 +15,18 @@ export default function Posts() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (archive) {
-        dispatch(getPosts('/archive'));
-      } else if (value) {
-        dispatch(getPosts(`?value=${value}`));
-      } else {
-        dispatch(getPosts());
-      }
+      if (value) dispatch(getPosts(`?value=${value}`));
     }, 500);
+
+    if (value) {
+    } else if (archive) {
+      dispatch(getPosts('/archive'));
+    } else {
+      dispatch(getPosts());
+    }
 
     return () => clearTimeout(timeout);
   }, [archive, value, dispatch]);
-
-  const handleRowClick = (id) => {
-    if (archive) {
-      toast.error(`You can't edit archived posts`);
-    } else {
-      history.push(`/posts/${id}`);
-    }
-  };
 
   return (
     <>
@@ -73,12 +64,17 @@ export default function Posts() {
       </div>
 
       {posts.map((post) => (
-        <Container key={post._id} onClick={() => handleRowClick(post._id)}>
-          <p>{post.text}</p>
-          <p>{post.location}</p>
-          <p>
-            <Moment format='HH:MM DD/MM/YY'>{post.date}</Moment>
-          </p>
+        <Container key={post._id}>
+          <StyledLink to={`/posts/${post._id}`}>
+            <Info>Description: {post.description}</Info>
+            <Info>Location: {post.location}</Info>
+            <Info>
+              {`Date: `} <Moment format='HH:MM DD/MM/YY'>{post.date}</Moment>
+            </Info>
+            <Info>Picketer: {'Empty' && post.picketer}</Info>
+          </StyledLink>
+
+          {!archive && <LinkEdit to={`/edit-post/${post._id}`}>Edit</LinkEdit>}
         </Container>
       ))}
     </>

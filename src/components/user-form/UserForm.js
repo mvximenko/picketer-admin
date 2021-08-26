@@ -55,7 +55,7 @@ export default function UserForm() {
 
   const archiveUser = async (id) => {
     try {
-      await api.put('/users/archive', { id });
+      await api.put(`/users/archive/${id}`);
       toast.success('User archived');
       history.push(`/users`);
     } catch (err) {

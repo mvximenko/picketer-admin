@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import Moment from 'react-moment';
-import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getUsers } from '../../redux/slices/userSlice';
@@ -10,14 +8,14 @@ import {
   Top,
   Heading,
   Input,
-  Link,
+  StyledLink,
   Table,
   Row,
   Cell,
+  LinkEdit,
 } from './UsersStyles';
 
 export default function Users() {
-  const history = useHistory();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.users, shallowEqual);
   const [value, setValue] = useState('');
@@ -25,25 +23,18 @@ export default function Users() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (archive) {
-        dispatch(getUsers('/archive'));
-      } else if (value) {
-        dispatch(getUsers(`?name=${value}`));
-      } else {
-        dispatch(getUsers());
-      }
+      if (value) dispatch(getUsers(`?name=${value}`));
     }, 500);
+
+    if (value) {
+    } else if (archive) {
+      dispatch(getUsers('/archive'));
+    } else {
+      dispatch(getUsers());
+    }
 
     return () => clearTimeout(timeout);
   }, [archive, value, dispatch]);
-
-  const handleRowClick = (id) => {
-    if (archive) {
-      toast.error(`You can't edit archived users`);
-    } else {
-      history.push(`/user/${id}`);
-    }
-  };
 
   return (
     <Container>
@@ -61,26 +52,34 @@ export default function Users() {
           />
         )}
 
-        <Link to='/create-user'>Create New User</Link>
+        <StyledLink to='/create-user'>Create New User</StyledLink>
       </Top>
 
       <Table>
         <Row header>
-          <Cell>Name</Cell>
-          <Cell>Email</Cell>
-          <Cell>Date</Cell>
-          <Cell>Role</Cell>
+          <Cell width={45}>Name</Cell>
+          <Cell width={25}>Email</Cell>
+          <Cell width={15}>Date</Cell>
+          <Cell width={15}>Role</Cell>
         </Row>
         {users.map((user) => (
-          <Row key={user.email} onClick={() => handleRowClick(user._id)}>
-            <Cell data-title='Name'>
+          <Row key={user.email}>
+            <Cell width={45} data-title='Name'>
               {user.surname} {user.name} {user.patronymic}
             </Cell>
-            <Cell data-title='Email'>{user.email}</Cell>
-            <Cell data-title='Date'>
+            <Cell width={25} data-title='Email'>
+              {user.email}
+            </Cell>
+            <Cell width={15} data-title='Date'>
               <Moment format='DD/MM/YY'>{user.date}</Moment>
             </Cell>
-            <Cell data-title='Role'>{user.role}</Cell>
+            <Cell width={15} data-title='Role'>
+              {user.role}
+
+              {!archive && (
+                <LinkEdit to={`/user/${user._id}`}>{' Edit'}</LinkEdit>
+              )}
+            </Cell>
           </Row>
         ))}
       </Table>

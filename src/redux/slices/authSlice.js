@@ -46,7 +46,7 @@ export const loadUser = () => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   const body = { email, password };
   try {
-    const res = await api.post('/auth', body);
+    const res = await api.post('/auth/admin', body);
     dispatch(loginSuccess(res.data.token));
     dispatch(loadUser());
   } catch (err) {

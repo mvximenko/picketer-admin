@@ -67,6 +67,13 @@ export const InputSubmit = styled.input`
   ${({ red }) => red && `background: #e74c3c`}
 `;
 
+export const Span = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+`;
+
 export const Wrapper = styled.div`
   display: flex;
   input + input {
