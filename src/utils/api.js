@@ -3,7 +3,10 @@ import store from '../redux/store';
 import { loginFailure } from '../redux/slices/authSlice';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api/',
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? 'https://picketer.herokuapp.com/api/'
+      : 'http://localhost:5000/api/',
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -14,7 +17,7 @@ api.interceptors.response.use(
       store.dispatch(loginFailure());
     }
     return Promise.reject(err);
-  }
+  },
 );
 
 export default api;
