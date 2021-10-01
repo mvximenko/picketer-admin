@@ -1,64 +1,42 @@
-import styled from 'styled-components';
+import tw, { styled } from 'twin.macro';
 
-export const Container = styled.div`
-  margin: 6%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
+export const OuterContainer = styled.div`
+  ${tw`relative min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8 relative`}
+`;
+
+export const InnerContainer = styled.div`
+  ${tw`max-w-md w-full space-y-8 p-10`}
+`;
+
+export const TextContainer = styled.div`
+  ${tw`text-center`}
+`;
+
+export const Heading = styled.h2`
+  ${tw`mt-6 text-3xl font-bold text-gray-900`}
+`;
+
+export const Paragraph = styled.p`
+  ${tw`mt-2 text-sm text-gray-600`}
 `;
 
 export const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 330px;
-  background: #fff;
-  padding: 32px;
-  padding-bottom: 48px;
-  border-radius: 8px;
-  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+  ${tw`mt-8 space-y-6`}
 `;
 
-export const Heading = styled.h1`
-  font-weight: bold;
-  text-align: center;
-  line-height: 1.5em;
-  margin-top: 4px;
-  margin-bottom: 30px;
+export const Label = styled.label`
+  ${tw`text-sm font-bold text-gray-700 tracking-wide`}
 `;
 
 export const Input = styled.input`
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 16px;
-  color: #384047;
-  background: #e8eeef;
-  border: none;
-  border-radius: 4px;
-  box-sizing: border-box;
-  &:focus {
-    outline: none;
-  }
+  ${tw`w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500`}
 `;
 
-export const InputSubmit = styled.input`
-  width: 100%;
-  color: #fff;
-  padding: 14px;
-  margin-top: 16px;
-  background: #4bc970;
-  border: none;
-  border-radius: 4px;
-  font-size: 19px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  transition: all 200ms ease-in-out;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-  &:hover {
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
-    transform: translateY(-4px);
-  }
+export const Button = styled.button`
+  ${tw`
+    w-full flex justify-center bg-indigo-500 text-gray-100 p-4
+    rounded-full tracking-wide font-semibold focus:outline-none
+    focus:ring hover:bg-indigo-600 shadow-lg cursor-pointer
+    transition ease-in duration-300
+  `}
 `;

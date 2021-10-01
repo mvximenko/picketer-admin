@@ -3,7 +3,17 @@ import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { login } from '../../redux/slices/authSlice';
-import { Container, Heading, Form, Input, InputSubmit } from './LoginStyles';
+import {
+  OuterContainer,
+  InnerContainer,
+  TextContainer,
+  Heading,
+  Paragraph,
+  Form,
+  Input,
+  Label,
+  Button,
+} from './LoginStyles';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -25,29 +35,41 @@ export default function Login() {
   }
 
   return (
-    <Container>
-      <Form onSubmit={(e) => onSubmit(e)}>
-        <Heading>Sign In</Heading>
-        <div>
-          <Input
-            type='email'
-            placeholder='Email Address'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-            required
-          />
-          <Input
-            type='password'
-            placeholder='Password'
-            name='password'
-            minLength='6'
-            value={password}
-            onChange={(e) => onChange(e)}
-          />
-          <InputSubmit type='submit' value='Sign In' />
-        </div>
-      </Form>
-    </Container>
+    <OuterContainer>
+      <InnerContainer>
+        <TextContainer>
+          <Heading>Welcome Back!</Heading>
+          <Paragraph>Please sign into your account</Paragraph>
+        </TextContainer>
+
+        <Form onSubmit={(e) => onSubmit(e)}>
+          <div>
+            <Label>Email</Label>
+            <Input
+              type='email'
+              placeholder='Enter your email'
+              name='email'
+              value={email}
+              required
+              onChange={(e) => onChange(e)}
+            />
+          </div>
+
+          <div>
+            <Label>Password</Label>
+            <Input
+              type='password'
+              placeholder='Enter your password'
+              name='password'
+              value={password}
+              required
+              onChange={(e) => onChange(e)}
+            />
+          </div>
+
+          <Button type='submit'>Sign in</Button>
+        </Form>
+      </InnerContainer>
+    </OuterContainer>
   );
 }

@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import { GlobalStyles as BaseStyles } from 'twin.macro';
 
-export const GlobalStyle = createGlobalStyle`
+const CustomStyles = createGlobalStyle`
   body {
     margin: 0;
     color: #384047;
@@ -16,3 +17,10 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 `;
+
+export const GlobalStyle = () => (
+  <>
+    <BaseStyles />
+    <CustomStyles />
+  </>
+);
