@@ -17,7 +17,7 @@ api.interceptors.response.use(
       store.dispatch(loginFailure());
     }
     return Promise.reject(err);
-  },
+  }
 );
 
 export default api;

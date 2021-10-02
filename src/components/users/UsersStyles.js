@@ -1,116 +1,84 @@
-import styled from 'styled-components';
+import tw, { styled } from 'twin.macro';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
-  padding: 40px;
-  margin: 0 auto;
-  max-width: 800px;
+  ${tw`container mx-auto px-4 sm:px-8 py-8`}
+`;
+
+export const Heading = styled.h2`
+  ${tw`text-2xl font-semibold leading-tight`}
 `;
 
 export const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  @media screen and (max-width: 580px) {
-    margin-bottom: 30px;
-    flex-wrap: wrap;
+  ${tw`my-2 flex sm:flex-row flex-col sm:items-center`}
+`;
+
+export const SelectContainer = styled.div`
+  ${tw`flex flex-row mb-1 sm:mb-0 relative`}
+`;
+
+export const Select = styled.select`
+  ${tw`
+    appearance-none h-full rounded border sm:rounded-r-none
+    border-r border-b block appearance-none w-full bg-white
+    border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight
+    focus:outline-none focus:border-l focus:border-r
+    focus:bg-white focus:border-gray-500
+  `}
+`;
+
+export const ArrowIconWrapper = styled.div`
+  ${tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}
+  svg {
+    ${tw`fill-current h-4 w-4`}
   }
 `;
 
-export const Heading = styled.h1`
-  cursor: pointer;
-  &:hover {
-    color: #57646e;
+export const Search = styled.div`
+  ${tw`block relative sm:border-l-0 mb-5 sm:mb-0`}
+`;
+
+export const HomeIconWrapper = styled.span`
+  ${tw`h-full absolute inset-y-0 left-0 flex items-center pl-2`}
+  svg {
+    ${tw`h-4 w-4 fill-current text-gray-500`}
   }
 `;
 
 export const Input = styled.input`
-  margin: auto 0;
-`;
-
-export const StyledLink = styled(Link)`
-  color: #fff;
-  background: #4bc970;
-  font-weight: bold;
-  padding: 10px;
-  cursor: pointer;
-  &:hover {
-    background: #40ad60;
-  }
-  @media screen and (max-width: 580px) {
-    width: 100%;
-    text-align: center;
-  }
-`;
-
-export const Table = styled.div`
-  width: 100%;
-  display: table;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  @media screen and (max-width: 580px) {
-    display: block;
-  }
-`;
-
-export const Row = styled.div`
-  width: 100%;
-  display: table-row;
-  background: #f6f6f6;
-  &:nth-of-type(odd) {
-    background: #e9e9e9;
-  }
-  ${({ header }) =>
-    header &&
-    `
-    color: #fff;  
-    cursor: default;
-    font-weight: bold; 
-    &:first-child { 
-      background: #4bc970; 
-    }
+  ${tw`
+    appearance-none rounded-r rounded-l sm:rounded-l-none
+    border border-gray-400 border-b block pl-8 pr-6 py-2
+    w-full bg-white text-sm placeholder-gray-400
+    text-gray-700 focus:bg-white focus:placeholder-gray-600
+    focus:text-gray-700 focus:outline-none
   `}
-
-  @media screen and (max-width: 580px) {
-    padding: 14px 0 7px;
-    display: block;
-    ${({ header }) =>
-      header &&
-      `
-      padding: 0; 
-      height: 6px; 
-      background: #4bc970; 
-      ${Cell} { 
-        display: none;
-      }
-    `}
-  }
 `;
 
-export const Cell = styled.div`
-  padding: 12px;
-  display: table-cell;
-  @media screen and (max-width: 580px) {
-    display: block;
-    padding: 2px 16px;
-    margin-bottom: 10px;
-    &:before {
-      margin-bottom: 3px;
-      content: attr(data-title);
-      min-width: 98px;
-      font-size: 10px;
-      line-height: 10px;
-      font-weight: bold;
-      text-transform: uppercase;
-      color: #969696;
-      display: block;
-    }
-  }
-  ${({ width }) => width && `width: ${width}%;`}
+export const CreateLink = styled(Link)`
+  ${tw`
+    mx-auto sm:ml-auto mr-0 px-3 py-2 font-semibold
+    text-white leading-tight rounded-md bg-indigo-500
+    hover:bg-indigo-600 transition ease-in duration-300
+  `}
 `;
 
-export const LinkEdit = styled(Link)`
-  cursor: pointer;
-  &:hover {
-    background: #d1d1d1;
-  }
+export const OuterContainer = styled.div`
+  ${tw`-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto`}
+`;
+
+export const InnerContainer = styled.div`
+  ${tw`inline-block min-w-full shadow rounded-lg overflow-hidden`}
+`;
+
+export const Table = styled.table`
+  ${tw`min-w-full leading-normal`}
+`;
+
+export const TH = styled.th`
+  ${tw`
+    px-5 py-3 border-b-2 border-gray-200 bg-gray-100
+    text-left text-xs font-semibold text-gray-600
+    uppercase tracking-wider
+  `}
 `;

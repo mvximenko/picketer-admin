@@ -1,18 +1,25 @@
 import { useState, useEffect } from 'react';
-import Moment from 'react-moment';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getUsers } from '../../redux/slices/userSlice';
+import Row from './Row';
+import { ReactComponent as HomeIcon } from '../../assets/search.svg';
+import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
 import {
   Container,
-  Top,
   Heading,
+  Top,
+  SelectContainer,
+  Select,
+  ArrowIconWrapper,
+  Search,
+  CreateLink,
+  HomeIconWrapper,
   Input,
-  StyledLink,
+  OuterContainer,
+  InnerContainer,
   Table,
-  Row,
-  Cell,
-  LinkEdit,
+  TH,
 } from './UsersStyles';
 
 export default function Users() {
@@ -22,67 +29,85 @@ export default function Users() {
   const [archive, setArchive] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (value) dispatch(getUsers(`?name=${value}`));
-    }, 500);
-
-    if (value) {
-    } else if (archive) {
+    if (archive) {
       dispatch(getUsers('/archive'));
     } else {
       dispatch(getUsers());
     }
+  }, [archive, dispatch]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (value) dispatch(getUsers(`/?name=${value}`));
+    }, 500);
 
     return () => clearTimeout(timeout);
-  }, [archive, value, dispatch]);
+  }, [value, dispatch]);
+
+  const handleChange = (e) => {
+    e.preventDefault();
+
+    if (e.target.value === 'Active') {
+      setArchive(false);
+    } else {
+      setArchive(true);
+    }
+    setValue('');
+  };
 
   return (
     <Container>
+      <Heading>Users</Heading>
+
       <Top>
-        <Heading onClick={() => setArchive(!archive)}>
-          {archive ? 'Archive' : 'Active'}
-        </Heading>
+        <SelectContainer>
+          <Select onChange={handleChange}>
+            <option>Active</option>
+            <option>Archive</option>
+          </Select>
+          <ArrowIconWrapper>
+            <ArrowIcon />
+          </ArrowIconWrapper>
+        </SelectContainer>
 
         {!archive && (
-          <Input
-            type='text'
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder='Search for...'
-          />
+          <Search>
+            <HomeIconWrapper>
+              <HomeIcon />
+            </HomeIconWrapper>
+            <Input
+              type='text'
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder='Search'
+            />
+          </Search>
         )}
 
-        <StyledLink to='/create-user'>Create New User</StyledLink>
+        <CreateLink to='/create-user'>Create New User</CreateLink>
       </Top>
 
-      <Table>
-        <Row header>
-          <Cell width={45}>Name</Cell>
-          <Cell width={25}>Email</Cell>
-          <Cell width={15}>Date</Cell>
-          <Cell width={15}>Role</Cell>
-        </Row>
-        {users.map((user) => (
-          <Row key={user.email}>
-            <Cell width={45} data-title='Name'>
-              {user.surname} {user.name} {user.patronymic}
-            </Cell>
-            <Cell width={25} data-title='Email'>
-              {user.email}
-            </Cell>
-            <Cell width={15} data-title='Date'>
-              <Moment format='DD/MM/YY'>{user.date}</Moment>
-            </Cell>
-            <Cell width={15} data-title='Role'>
-              {user.role}
+      <OuterContainer>
+        <InnerContainer>
+          <Table>
+            <thead>
+              <tr>
+                <TH>User</TH>
+                <TH>Email</TH>
+                <TH>Date</TH>
+                <TH>Role</TH>
+                <TH>Actions</TH>
+              </tr>
+            </thead>
 
-              {!archive && (
-                <LinkEdit to={`/user/${user._id}`}>{' Edit'}</LinkEdit>
-              )}
-            </Cell>
-          </Row>
-        ))}
-      </Table>
+            <tbody>
+              {users.map((user) => (
+                <Row user={user} archive={archive} />
+              ))}
+            </tbody>
+          </Table>
+        </InnerContainer>
+      </OuterContainer>
     </Container>
   );
 }

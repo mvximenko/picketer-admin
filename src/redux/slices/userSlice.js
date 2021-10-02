@@ -55,7 +55,7 @@ export const {
 
 export const getUsers = (query) => async (dispatch) => {
   try {
-    const res = await api.get(query ? `/users${query}` : '/users');
+    const res = await api.get(query ? `/users/${query}` : '/users');
     dispatch(getUsersSuccess(res.data));
   } catch (err) {
     dispatch(

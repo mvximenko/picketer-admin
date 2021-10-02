@@ -14,19 +14,20 @@ export default function Posts() {
   const [archive, setArchive] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (value) dispatch(getPosts(`?value=${value}`));
-    }, 500);
-
-    if (value) {
-    } else if (archive) {
+    if (archive) {
       dispatch(getPosts('/archive'));
     } else {
       dispatch(getPosts());
     }
+  }, [archive, dispatch]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (value) dispatch(getPosts(`/?value=${value}`));
+    }, 500);
 
     return () => clearTimeout(timeout);
-  }, [archive, value, dispatch]);
+  }, [value, dispatch]);
 
   return (
     <>
