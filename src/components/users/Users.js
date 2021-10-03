@@ -102,7 +102,7 @@ export default function Users() {
 
             <tbody>
               {users.map((user) => (
-                <Row user={user} archive={archive} />
+                <Row user={user} archive={archive} key={user._id} />
               ))}
             </tbody>
           </Table>

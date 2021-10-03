@@ -29,10 +29,21 @@ const auth = createSlice({
       state.loading = false;
       state.user = action.payload;
     },
+    logout: (state) => {
+      state.token = null;
+      state.isAuthenticated = false;
+      state.loading = false;
+      state.user = null;
+    },
   },
 });
 
-export const { loginSuccess, loginFailure, getUserSuccess } = auth.actions;
+export const {
+  loginSuccess,
+  loginFailure,
+  getUserSuccess,
+  logout,
+} = auth.actions;
 
 export const loadUser = () => async (dispatch) => {
   try {
@@ -56,7 +67,5 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loginFailure());
   }
 };
-
-export const logout = () => async (dispatch) => dispatch(loginFailure());
 
 export default auth.reducer;
