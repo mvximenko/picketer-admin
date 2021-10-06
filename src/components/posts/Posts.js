@@ -1,10 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getPosts } from '../../redux/slices/postSlice';
-import { Container, Info, StyledLink, LinkEdit } from './PostsStyles';
+import Row from './Row';
+import { ReactComponent as SearchIcon } from '../../assets/search.svg';
+import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
+import {
+  Container,
+  Heading,
+  Top,
+  SelectContainer,
+  Select,
+  ArrowIconWrapper,
+  Search,
+  Date,
+  CreateLink,
+  HomeIconWrapper,
+  Input,
+  OuterContainer,
+  InnerContainer,
+  Table,
+  TH,
+} from './PostsStyles';
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -29,55 +46,87 @@ export default function Posts() {
     return () => clearTimeout(timeout);
   }, [value, dispatch]);
 
+  const handleChange = (e) => {
+    e.preventDefault();
+
+    if (e.target.value === 'Active') {
+      setArchive(false);
+    } else {
+      setArchive(true);
+    }
+
+    setValue('');
+    setDate('');
+  };
+
   return (
-    <>
-      <div>
-        <h1 onClick={() => setArchive(!archive)}>
-          {archive ? 'Archive' : 'Active'}
-        </h1>
+    <Container>
+      <Heading>Posts</Heading>
+
+      <Top>
+        <SelectContainer>
+          <Select onChange={handleChange}>
+            <option>Active</option>
+            <option>Archive</option>
+          </Select>
+          <ArrowIconWrapper>
+            <ArrowIcon />
+          </ArrowIconWrapper>
+        </SelectContainer>
 
         {!archive && (
           <>
-            <input
-              type='text'
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value);
-                setDate('');
-              }}
-              placeholder='Search for...'
-            />
+            <Search>
+              <HomeIconWrapper>
+                <SearchIcon />
+              </HomeIconWrapper>
+              <Input
+                type='text'
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder='Search'
+              />
+            </Search>
 
-            <input
-              type='date'
-              value={date}
-              onChange={(e) => {
-                setValue(e.target.value);
-                setDate(e.target.value);
-              }}
-              min='2020-01-01'
-              max='2025-01-01'
-            />
+            <Search>
+              <Date
+                type='date'
+                value={date}
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  setDate(e.target.value);
+                }}
+                min='2020-01-01'
+                max='2025-01-01'
+              />
+            </Search>
           </>
         )}
 
-        <Link to='/create-post'>Create New Post</Link>
-      </div>
+        <CreateLink to='/create-post'>Create New Post</CreateLink>
+      </Top>
 
-      {posts.map((post) => (
-        <Container key={post._id}>
-          <StyledLink to={`/posts/${post._id}`}>
-            <Info>Description: {post.description}</Info>
-            <Info>Location: {post.location}</Info>
-            <Info>
-              {`Date: `} <Moment format='HH:MM DD/MM/YY'>{post.date}</Moment>
-            </Info>
-            <Info>Picketer: {'Empty' && post.picketer}</Info>
-          </StyledLink>
+      <OuterContainer>
+        <InnerContainer>
+          <Table>
+            <thead>
+              <tr>
+                <TH>Title</TH>
+                <TH>Location</TH>
+                <TH>Date</TH>
+                <TH>Picketer</TH>
+                <TH>Actions</TH>
+              </tr>
+            </thead>
 
-          {!archive && <LinkEdit to={`/edit-post/${post._id}`}>Edit</LinkEdit>}
-        </Container>
-      ))}
-    </>
+            <tbody>
+              {posts.map((post) => (
+                <Row post={post} archive={archive} key={post._id} />
+              ))}
+            </tbody>
+          </Table>
+        </InnerContainer>
+      </OuterContainer>
+    </Container>
   );
 }

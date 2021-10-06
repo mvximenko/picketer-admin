@@ -3,7 +3,7 @@ import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getUsers } from '../../redux/slices/userSlice';
 import Row from './Row';
-import { ReactComponent as HomeIcon } from '../../assets/search.svg';
+import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
 import {
   Container,
@@ -73,7 +73,7 @@ export default function Users() {
         {!archive && (
           <Search>
             <HomeIconWrapper>
-              <HomeIcon />
+              <SearchIcon />
             </HomeIconWrapper>
             <Input
               type='text'

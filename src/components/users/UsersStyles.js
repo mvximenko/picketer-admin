@@ -35,7 +35,7 @@ export const ArrowIconWrapper = styled.div`
 `;
 
 export const Search = styled.div`
-  ${tw`block relative sm:border-l-0 mb-5 sm:mb-0`}
+  ${tw`relative sm:border-l-0 mb-5 sm:mb-0`}
 `;
 
 export const HomeIconWrapper = styled.span`
