@@ -19,11 +19,9 @@ export const SelectContainer = styled.div`
 
 export const Select = styled.select`
   ${tw`
-    appearance-none h-full rounded border sm:rounded-r-none
-    border-r border-b block appearance-none w-full bg-white
-    border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight
-    focus:outline-none focus:border-l focus:border-r
-    focus:bg-white focus:border-gray-500
+    appearance-none h-full rounded sm:rounded-r-none border
+    block appearance-none w-full bg-white border-gray-400
+    text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none
   `}
 `;
 
@@ -38,7 +36,7 @@ export const Search = styled.div`
   ${tw`relative mb-1 sm:mb-0`}
 `;
 
-export const HomeIconWrapper = styled.span`
+export const SearchIconWrapper = styled.span`
   ${tw`h-full absolute inset-y-0 left-0 flex items-center pl-2`}
   svg {
     ${tw`h-4 w-4 fill-current text-gray-500`}
@@ -47,11 +45,11 @@ export const HomeIconWrapper = styled.span`
 
 export const Input = styled.input`
   ${tw`
-    appearance-none sm:rounded-l-none
-    border border-gray-400 border-b block pl-8 pr-6 py-2
-    w-full bg-white text-sm placeholder-gray-400
-    text-gray-700 focus:bg-white focus:placeholder-gray-600
-    focus:text-gray-700 focus:outline-none
+    appearance-none rounded-l sm:rounded-l-none
+    border sm:border-l-0 border-gray-400 block pl-8 pr-6 py-2
+    w-full bg-white text-sm placeholder-gray-400 text-gray-700
+    focus:bg-white focus:placeholder-gray-600 focus:text-gray-700
+    focus:outline-none
   `}
 `;
 

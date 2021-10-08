@@ -20,7 +20,7 @@ export default function Row({ post, archive }) {
       </TD>
 
       <TD>
-        <RoleSpan> {picketer ? picketer : 'No Picketer'}</RoleSpan>
+        <RoleSpan>{picketer ? picketer : 'No Picketer'}</RoleSpan>
       </TD>
 
       <TD>{!archive && <LinkEdit to={`/edit-post/${_id}`}>Edit</LinkEdit>}</TD>

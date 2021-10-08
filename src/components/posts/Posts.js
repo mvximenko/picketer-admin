@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getPosts } from '../../redux/slices/postSlice';
@@ -15,13 +16,14 @@ import {
   Search,
   Date,
   CreateLink,
-  HomeIconWrapper,
+  SearchIconWrapper,
   Input,
   OuterContainer,
   InnerContainer,
   Table,
   TH,
 } from './PostsStyles';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -31,20 +33,19 @@ export default function Posts() {
   const [archive, setArchive] = useState(false);
 
   useEffect(() => {
-    if (archive) {
+    const timeout = setTimeout(() => {
+      if (value || date) dispatch(getPosts(`/?value=${value || date}`));
+    }, 500);
+
+    if (value || date) {
+    } else if (archive) {
       dispatch(getPosts('/archive'));
     } else {
       dispatch(getPosts());
     }
-  }, [archive, dispatch]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (value) dispatch(getPosts(`/?value=${value}`));
-    }, 500);
 
     return () => clearTimeout(timeout);
-  }, [value, dispatch]);
+  }, [archive, value, date, dispatch]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -77,27 +78,30 @@ export default function Posts() {
         {!archive && (
           <>
             <Search>
-              <HomeIconWrapper>
+              <SearchIconWrapper>
                 <SearchIcon />
-              </HomeIconWrapper>
+              </SearchIconWrapper>
               <Input
                 type='text'
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => {
+                  setDate('');
+                  setValue(e.target.value);
+                }}
                 placeholder='Search'
               />
             </Search>
 
             <Search>
-              <Date
-                type='date'
-                value={date}
-                onChange={(e) => {
-                  setValue(e.target.value);
-                  setDate(e.target.value);
+              <DatePicker
+                selected={date}
+                customInput={<Date />}
+                dateFormat='dd/MM/yyyy'
+                placeholderText='Choose Date'
+                onChange={(date) => {
+                  setValue('');
+                  setDate(date);
                 }}
-                min='2020-01-01'
-                max='2025-01-01'
               />
             </Search>
           </>

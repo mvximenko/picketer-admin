@@ -14,7 +14,7 @@ import {
   ArrowIconWrapper,
   Search,
   CreateLink,
-  HomeIconWrapper,
+  SearchIconWrapper,
   Input,
   OuterContainer,
   InnerContainer,
@@ -29,20 +29,19 @@ export default function Users() {
   const [archive, setArchive] = useState(false);
 
   useEffect(() => {
-    if (archive) {
-      dispatch(getUsers('/archive'));
-    } else {
-      dispatch(getUsers());
-    }
-  }, [archive, dispatch]);
-
-  useEffect(() => {
     const timeout = setTimeout(() => {
       if (value) dispatch(getUsers(`/?name=${value}`));
     }, 500);
 
+    if (value) {
+    } else if (archive) {
+      dispatch(getUsers('/archive'));
+    } else {
+      dispatch(getUsers());
+    }
+
     return () => clearTimeout(timeout);
-  }, [value, dispatch]);
+  }, [archive, value, dispatch]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -72,9 +71,9 @@ export default function Users() {
 
         {!archive && (
           <Search>
-            <HomeIconWrapper>
+            <SearchIconWrapper>
               <SearchIcon />
-            </HomeIconWrapper>
+            </SearchIconWrapper>
             <Input
               type='text'
               value={value}
