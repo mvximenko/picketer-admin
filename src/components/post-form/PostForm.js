@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
@@ -6,21 +6,21 @@ import { useSelector } from '../../redux/store';
 import { getPost, resetPost, updatePost } from '../../redux/slices/postSlice';
 import api from '../../utils/api';
 import {
-  Container,
+  OuterContainer,
+  InnerContainer,
+  Form,
   Heading,
-  Grid,
-  Input,
-  InputSubmit,
-  Span,
   Wrapper,
+  Input,
   TextArea,
+  Buttons,
+  Button,
 } from './PostFormStyles';
 
 export default function PostForm() {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
   const post = useSelector((state) => state.post.post, shallowEqual);
   const { title, location, picketer, description } = post;
 
@@ -67,61 +67,77 @@ export default function PostForm() {
   };
 
   return (
-    <Container>
-      <Heading>{id ? 'Edit Post' : 'Add Post'}</Heading>
-      <form onSubmit={handleSubmit}>
-        <Grid>
-          <Input
-            type='text'
-            name='title'
-            placeholder='Title'
-            value={title}
-            onChange={onChange}
-          />
-          <Input
-            type='text'
-            name='location'
-            placeholder='Location'
-            value={location}
-            onChange={onChange}
-          />
+    <OuterContainer>
+      <InnerContainer>
+        <Form onSubmit={handleSubmit}>
+          <Heading>{id ? 'Edit Post' : 'Add Post'}</Heading>
 
-          {!isOpen ? (
-            <Span onClick={() => setIsOpen(true)}>
-              {id ? 'Change Picketer' : 'Add Picketer'}
-            </Span>
-          ) : (
+          <Wrapper>
+            <label htmlFor='title'>Title</label>
             <Input
-              type='email'
+              type='text'
+              name='title'
+              id='title'
+              placeholder='Title'
+              value={title}
+              onChange={onChange}
+            />
+          </Wrapper>
+
+          <Wrapper>
+            <label htmlFor='location'>Location</label>
+            <Input
+              type='text'
+              name='location'
+              id='location'
+              className=''
+              placeholder='Location'
+              value={location}
+              onChange={onChange}
+            />
+          </Wrapper>
+
+          <Wrapper>
+            <label htmlFor='picketer'>Picketer Email</label>
+            <Input
+              type='text'
               name='picketer'
+              id='picketer'
               placeholder='Picketer Email'
               value={picketer}
               onChange={onChange}
             />
-          )}
-        </Grid>
+          </Wrapper>
 
-        <TextArea
-          type='text'
-          name='description'
-          id='description'
-          value={description}
-          onChange={onChange}
-          placeholder='Description...'
-        />
-
-        <Wrapper>
-          {id && (
-            <InputSubmit
-              onClick={() => archivePost(id)}
-              type='button'
-              value='Archive Post'
-              red
+          <Wrapper>
+            <label htmlFor='description'>Description</label>
+            <TextArea
+              type='text'
+              name='description'
+              id='description'
+              value={description}
+              onChange={onChange}
+              placeholder='Describe everything about this post here'
             />
-          )}
-          <InputSubmit type='submit' value={id ? 'Edit Post' : 'Add Post'} />
-        </Wrapper>
-      </form>
-    </Container>
+          </Wrapper>
+
+          <Buttons>
+            {id && (
+              <Button
+                type='button'
+                variant='red'
+                onClick={() => archivePost(id)}
+              >
+                Archive Post
+              </Button>
+            )}
+
+            <Button type='submit' variant='blue'>
+              {id ? 'Edit Post' : 'Add Post'}
+            </Button>
+          </Buttons>
+        </Form>
+      </InnerContainer>
+    </OuterContainer>
   );
 }

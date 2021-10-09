@@ -1,5 +1,5 @@
 import Moment from 'react-moment';
-import { TD, Paragraph, RoleSpan, LinkEdit } from './RowStyles';
+import { TD, Paragraph, Span, LinkEdit } from './RowStyles';
 
 export default function Row({ post, archive }) {
   const { title, location, date, picketer, _id } = post;
@@ -20,7 +20,7 @@ export default function Row({ post, archive }) {
       </TD>
 
       <TD>
-        <RoleSpan>{picketer ? picketer : 'No Picketer'}</RoleSpan>
+        <Span>{picketer ? picketer : 'No Picketer'}</Span>
       </TD>
 
       <TD>{!archive && <LinkEdit to={`/edit-post/${_id}`}>Edit</LinkEdit>}</TD>

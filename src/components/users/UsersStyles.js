@@ -33,7 +33,7 @@ export const ArrowIconWrapper = styled.div`
 `;
 
 export const Search = styled.div`
-  ${tw`relative mb-5 sm:mb-0`}
+  ${tw`relative`}
 `;
 
 export const SearchIconWrapper = styled.span`
@@ -58,6 +58,7 @@ export const CreateLink = styled(Link)`
     mx-auto sm:ml-auto mr-0 px-3 py-2 font-semibold
     text-white leading-tight rounded-md bg-indigo-500
     hover:bg-indigo-600 transition ease-in duration-300
+    mt-5 sm:mt-0
   `}
 `;
 

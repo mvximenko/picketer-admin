@@ -1,93 +1,58 @@
-import styled from 'styled-components';
+import tw, { styled } from 'twin.macro';
 
-export const Container = styled.div`
-  padding: 40px;
-  margin: 4% auto;
-  max-width: 700px;
-  background: #fff;
-  border-radius: 8px;
-  box-sizing: border-box;
-  box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
-  @media (max-width: 580px) {
-    margin: 4%;
+const containerVariants = {
+  red: tw`bg-red-500 hover:bg-red-600`,
+  blue: tw`bg-blue-500 hover:bg-blue-600`,
+};
+
+export const OuterContainer = styled.div`
+  ${tw`flex items-center justify-center`}
+  min-height: calc(100vh - 5rem);
+
+  @media only screen and (min-width: 600px) {
+    min-height: calc(100vh - 4rem);
   }
+`;
+
+export const InnerContainer = styled.div`
+  ${tw`container`}
+`;
+
+export const Form = styled.form`
+  ${tw`
+    bg-white rounded shadow-lg p-4 px-4 md:p-8
+    m-4 mb-6 text-sm max-w-screen-md sm:mx-auto
+  `}
 `;
 
 export const Heading = styled.h1`
-  font-weight: bold;
-  text-align: center;
-  line-height: 1.5em;
-  margin-top: 0;
-  margin-bottom: 30px;
-`;
-
-export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-bottom: 35px;
-  @media (max-width: 580px) {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-`;
-
-export const Input = styled.input`
-  width: 100%;
-  height: 40px;
-  padding: 12px;
-  background: #e8eeef;
-  border: none;
-  border-radius: 4px;
-  box-sizing: border-box;
-  &:focus {
-    outline: none;
-  }
-`;
-
-export const InputSubmit = styled.input`
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  display: block;
-  color: #fff;
-  background: #4bc970;
-  border: none;
-  border-radius: 4px;
-  font-size: 19px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  transition: all 200ms ease-in-out;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-  &:hover {
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
-    transform: translateY(-4px);
-  }
-  ${({ red }) => red && `background: #e74c3c`}
-`;
-
-export const Span = styled.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
+  ${tw`text-gray-600 text-center font-medium text-2xl mt-2 mb-5`}
 `;
 
 export const Wrapper = styled.div`
-  display: flex;
-  input + input {
-    margin-left: 30px;
-  }
-  @media (max-width: 580px) {
-    input + input {
-      margin-left: 10px;
-    }
-  }
+  ${tw`py-2`}
+`;
+
+export const Input = styled.input`
+  ${tw`h-10 border mt-1 rounded px-4 w-full bg-gray-50 outline-none`}
 `;
 
 export const TextArea = styled.textarea`
-  width: 100%;
-  height: 150px;
-  box-sizing: border-box;
+  ${tw`
+    bg-gray-100 p-3 h-24 border border-gray-300 outline-none
+    border mt-1 rounded px-4 w-full bg-gray-50
+  `}
+`;
+
+export const Buttons = styled.div`
+  ${tw`flex justify-end`}
+
+  button + button {
+    ${tw`ml-2`}
+  }
+`;
+
+export const Button = styled.button`
+  ${tw`text-white font-bold py-2 px-4 rounded transition ease-in duration-300`}
+  ${({ variant }) => containerVariants[variant]}
 `;

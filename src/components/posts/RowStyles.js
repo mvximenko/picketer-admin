@@ -14,8 +14,8 @@ export const Paragraph = styled.p`
   ${tw`text-gray-900 whitespace-nowrap`}
 `;
 
-export const RoleSpan = styled.span`
-  ${tw`relative inline-block py-1 font-semibold leading-tight rounded-full`}
+export const Span = styled.span`
+  ${tw`relative inline-block py-1 font-semibold leading-tight`}
   ${({ variant }) => containerVariants[variant]}
 `;
 

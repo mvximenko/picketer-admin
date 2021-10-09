@@ -55,11 +55,11 @@ export const Input = styled.input`
 
 export const Date = styled.input`
   ${tw`
-  appearance-none rounded-r rounded-l sm:rounded-l-none
-  border border-gray-400 border-b block pl-8 pr-6 py-2
-  w-full bg-white text-sm placeholder-gray-400
-  text-gray-700 focus:bg-white focus:placeholder-gray-600
-  focus:text-gray-700 focus:outline-none sm:border-l-0 mb-5 sm:mb-0
+    appearance-none rounded-r rounded-l sm:rounded-l-none
+    border border-gray-400 border-b block pl-8 pr-6 py-2
+    w-full bg-white text-sm placeholder-gray-400
+    text-gray-700 focus:bg-white focus:placeholder-gray-600
+    focus:text-gray-700 focus:outline-none sm:border-l-0
   `}
 `;
 
@@ -68,6 +68,7 @@ export const CreateLink = styled(Link)`
     mx-auto sm:ml-auto mr-0 px-3 py-2 font-semibold
     text-white leading-tight rounded-md bg-indigo-500
     hover:bg-indigo-600 transition ease-in duration-300
+    mt-5 sm:mt-0
   `}
 `;
 
