@@ -8,8 +8,9 @@ import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
 import {
   Container,
-  Heading,
   Top,
+  Heading,
+  SearchPanel,
   SelectContainer,
   Select,
   ArrowIconWrapper,
@@ -62,9 +63,12 @@ export default function Posts() {
 
   return (
     <Container>
-      <Heading>Posts</Heading>
-
       <Top>
+        <Heading>Posts</Heading>
+        <CreateLink to='/create-post'>Create New Post</CreateLink>
+      </Top>
+
+      <SearchPanel>
         <SelectContainer>
           <Select onChange={handleChange}>
             <option>Active</option>
@@ -106,9 +110,7 @@ export default function Posts() {
             </Search>
           </>
         )}
-
-        <CreateLink to='/create-post'>Create New Post</CreateLink>
-      </Top>
+      </SearchPanel>
 
       <OuterContainer>
         <InnerContainer>

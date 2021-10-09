@@ -5,11 +5,15 @@ export const Container = styled.div`
   ${tw`container mx-auto px-4 sm:px-8 py-8`}
 `;
 
+export const Top = styled.div`
+  ${tw`flex items-center`}
+`;
+
 export const Heading = styled.h2`
   ${tw`text-2xl font-semibold leading-tight`}
 `;
 
-export const Top = styled.div`
+export const SearchPanel = styled.div`
   ${tw`my-2 flex sm:flex-row flex-col sm:items-center`}
 `;
 
@@ -58,7 +62,6 @@ export const CreateLink = styled(Link)`
     mx-auto sm:ml-auto mr-0 px-3 py-2 font-semibold
     text-white leading-tight rounded-md bg-indigo-500
     hover:bg-indigo-600 transition ease-in duration-300
-    mt-5 sm:mt-0
   `}
 `;
 

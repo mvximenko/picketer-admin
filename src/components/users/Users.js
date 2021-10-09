@@ -7,8 +7,9 @@ import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
 import {
   Container,
-  Heading,
   Top,
+  Heading,
+  SearchPanel,
   SelectContainer,
   Select,
   ArrowIconWrapper,
@@ -56,9 +57,12 @@ export default function Users() {
 
   return (
     <Container>
-      <Heading>Users</Heading>
-
       <Top>
+        <Heading>Users</Heading>
+        <CreateLink to='/create-user'>Create New User</CreateLink>
+      </Top>
+
+      <SearchPanel>
         <SelectContainer>
           <Select onChange={handleChange}>
             <option>Active</option>
@@ -82,9 +86,7 @@ export default function Users() {
             />
           </Search>
         )}
-
-        <CreateLink to='/create-user'>Create New User</CreateLink>
-      </Top>
+      </SearchPanel>
 
       <OuterContainer>
         <InnerContainer>
