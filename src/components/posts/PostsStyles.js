@@ -13,6 +13,14 @@ export const Heading = styled.h2`
   ${tw`text-2xl font-semibold leading-tight`}
 `;
 
+export const CreateLink = styled(Link)`
+  ${tw`
+    mx-auto sm:ml-auto mr-0 px-3 py-2 font-semibold
+    text-white leading-tight rounded-md bg-indigo-500
+    hover:bg-indigo-600 transition ease-in duration-300
+  `}
+`;
+
 export const SearchPanel = styled.div`
   ${tw`my-2 flex sm:flex-row flex-col sm:items-center`}
 `;
@@ -64,14 +72,6 @@ export const Date = styled.input`
     w-full bg-white text-sm placeholder-gray-400
     text-gray-700 focus:bg-white focus:placeholder-gray-600
     focus:text-gray-700 focus:outline-none sm:border-l-0
-  `}
-`;
-
-export const CreateLink = styled(Link)`
-  ${tw`
-    mx-auto sm:ml-auto mr-0 px-3 py-2 font-semibold
-    text-white leading-tight rounded-md bg-indigo-500
-    hover:bg-indigo-600 transition ease-in duration-300
   `}
 `;
 

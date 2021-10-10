@@ -115,9 +115,9 @@ export default function PostForm() {
               type='text'
               name='description'
               id='description'
+              placeholder='Describe everything about this post here'
               value={description}
               onChange={onChange}
-              placeholder='Describe everything about this post here'
             />
           </Wrapper>
 
