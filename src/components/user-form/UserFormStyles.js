@@ -58,6 +58,6 @@ export const Buttons = styled.div`
 `;
 
 export const Button = styled.button`
-  ${tw`text-white font-bold py-2 px-4 rounded transition ease-in duration-300`}
+  ${tw`text-white font-bold mt-1 py-2 px-4 rounded transition ease-in duration-300`}
   ${({ variant }) => containerVariants[variant]}
 `;

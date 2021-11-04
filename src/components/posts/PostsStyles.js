@@ -1,5 +1,12 @@
-import tw, { styled } from 'twin.macro';
+import tw, { styled, css } from 'twin.macro';
 import { Link } from 'react-router-dom';
+
+const iconWrapper = css`
+  ${tw`h-full absolute inset-y-0 left-0 flex items-center pl-2`}
+  svg {
+    ${tw`h-4 w-4 fill-current text-gray-500`}
+  }
+`;
 
 export const Container = styled.div`
   ${tw`container mx-auto px-4 sm:px-8 py-8`}
@@ -49,10 +56,7 @@ export const Search = styled.div`
 `;
 
 export const SearchIconWrapper = styled.span`
-  ${tw`h-full absolute inset-y-0 left-0 flex items-center pl-2`}
-  svg {
-    ${tw`h-4 w-4 fill-current text-gray-500`}
-  }
+  ${iconWrapper}
 `;
 
 export const Input = styled.input`
@@ -63,6 +67,11 @@ export const Input = styled.input`
     focus:bg-white focus:placeholder-gray-600 focus:text-gray-700
     focus:outline-none
   `}
+`;
+
+export const CalendarIconWrapper = styled.span`
+  ${iconWrapper}
+  ${tw`z-10`}
 `;
 
 export const Date = styled.input`

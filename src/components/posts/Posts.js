@@ -6,6 +6,7 @@ import { getPosts } from '../../redux/slices/postSlice';
 import Row from './Row';
 import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
+import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
 import {
   Container,
   Top,
@@ -15,6 +16,7 @@ import {
   Select,
   ArrowIconWrapper,
   Search,
+  CalendarIconWrapper,
   Date,
   CreateLink,
   SearchIconWrapper,
@@ -97,6 +99,9 @@ export default function Posts() {
             </Search>
 
             <Search>
+              <CalendarIconWrapper>
+                <CalendarIcon />
+              </CalendarIconWrapper>
               <DatePicker
                 selected={date}
                 customInput={<Date />}
