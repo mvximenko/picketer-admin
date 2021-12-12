@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import store, { useSelector } from './redux/store';
-import { loadUser } from './redux/slices/authSlice';
+import { loadUser, loginFailure } from './redux/slices/authSlice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './components/auth/Login';
@@ -15,15 +15,16 @@ import Navbar from './components/navbar/Navbar';
 import setAuthToken from './utils/setAuthToken';
 import { GlobalStyle } from './GlobalStyles';
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
-
 export default function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    store.dispatch(loadUser());
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+      store.dispatch(loadUser());
+    } else {
+      store.dispatch(loginFailure());
+    }
   }, []);
 
   return (

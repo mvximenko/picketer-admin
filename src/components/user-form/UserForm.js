@@ -141,7 +141,7 @@ export default function UserForm() {
                 name='password'
                 id='password'
                 placeholder='Password'
-                value={password}
+                value={password ? password : ''}
                 onChange={onChange}
               />
             </Wrapper>
