@@ -45,6 +45,10 @@ export const Input = styled.input`
   ${input}
 `;
 
+export const Span = styled.span`
+  ${tw`text-blue-800 hover:text-blue-500 cursor-pointer p-2 select-none`}
+`;
+
 export const Select = styled.select`
   ${input}
 `;

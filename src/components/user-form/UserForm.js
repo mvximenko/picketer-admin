@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
@@ -13,6 +13,7 @@ import {
   Grid,
   Wrapper,
   Input,
+  Span,
   Select,
   Buttons,
   Button,
@@ -24,6 +25,7 @@ export default function UserForm() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user, shallowEqual);
   const { name, surname, patronymic, email, role, password } = user;
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (id) dispatch(getUser(id));
@@ -136,14 +138,26 @@ export default function UserForm() {
 
             <Wrapper>
               <label htmlFor='password'>Password</label>
-              <Input
-                type='password'
-                name='password'
-                id='password'
-                placeholder='Password'
-                value={password ? password : ''}
-                onChange={onChange}
-              />
+
+              {id && (
+                <Span onClick={() => setOpen(!open)}>
+                  {open ? 'Close' : 'Change'}
+                </Span>
+              )}
+
+              {(!id || (id && open)) && (
+                <Input
+                  type='password'
+                  name='password'
+                  id='password'
+                  placeholder='Password'
+                  autoComplete='off'
+                  minLength='6'
+                  required
+                  value={password}
+                  onChange={onChange}
+                />
+              )}
             </Wrapper>
 
             <Buttons>
