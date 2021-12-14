@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
-import { getUser, resetUser, updateUser } from '../../redux/slices/userSlice';
+import { resetUser, updateUser } from '../../redux/slices/userSlice';
 import api from '../../utils/api';
 import {
   OuterContainer,
@@ -13,24 +12,19 @@ import {
   Grid,
   Wrapper,
   Input,
-  Span,
   Select,
   Buttons,
   Button,
-} from './UserFormStyles';
+} from './styles';
 
-export default function UserForm() {
-  const { id } = useParams();
-  const history = useHistory();
+export default function AddUser() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user, shallowEqual);
+  const { user } = useSelector((state) => state.user, shallowEqual);
   const { name, surname, patronymic, email, role, password } = user;
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (id) dispatch(getUser(id));
     return () => dispatch(resetUser());
-  }, [id, dispatch]);
+  }, [dispatch]);
 
   const onChange = (e) => {
     dispatch(updateUser({ name: e.target.name, value: e.target.value }));
@@ -39,28 +33,9 @@ export default function UserForm() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const hasEmptyFields = Object.values(user).some((value) => value === '');
-
-      if (hasEmptyFields) {
-        toast.error('Please fill in all fields');
-      } else if (id) {
-        await api.put('/users/user', user);
-        toast.success('User updated');
-      } else {
-        await api.post('/users', user);
-        toast.success('User created');
-        dispatch(resetUser());
-      }
-    } catch (err) {
-      toast.error(err.toString());
-    }
-  };
-
-  const archiveUser = async (id) => {
-    try {
-      await api.put(`/users/archive/${id}`);
-      toast.success('User archived');
-      history.push(`/users`);
+      await api.post('/users', user);
+      toast.success('User created');
+      dispatch(resetUser());
     } catch (err) {
       toast.error(err.toString());
     }
@@ -70,7 +45,7 @@ export default function UserForm() {
     <OuterContainer>
       <InnerContainer>
         <Form onSubmit={handleSubmit}>
-          <Heading>{id ? 'Edit User' : 'Add User'}</Heading>
+          <Heading>Add User</Heading>
 
           <Grid>
             <Wrapper>
@@ -82,6 +57,7 @@ export default function UserForm() {
                 placeholder='Name'
                 value={name}
                 onChange={onChange}
+                required
               />
             </Wrapper>
 
@@ -94,6 +70,7 @@ export default function UserForm() {
                 placeholder='Surname'
                 value={surname}
                 onChange={onChange}
+                required
               />
             </Wrapper>
 
@@ -106,18 +83,20 @@ export default function UserForm() {
                 placeholder='Patronymic'
                 value={patronymic}
                 onChange={onChange}
+                required
               />
             </Wrapper>
 
             <Wrapper>
               <label htmlFor='email'>Email</label>
               <Input
-                type='text'
+                type='email'
                 name='email'
                 id='email'
                 placeholder='Email'
                 value={email}
                 onChange={onChange}
+                required
               />
             </Wrapper>
 
@@ -129,6 +108,7 @@ export default function UserForm() {
                 placeholder='role'
                 value={role}
                 onChange={onChange}
+                required
               >
                 <option value=''>Select the role</option>
                 <option value='user'>User</option>
@@ -138,41 +118,22 @@ export default function UserForm() {
 
             <Wrapper>
               <label htmlFor='password'>Password</label>
-
-              {id && (
-                <Span onClick={() => setOpen(!open)}>
-                  {open ? 'Close' : 'Change'}
-                </Span>
-              )}
-
-              {(!id || (id && open)) && (
-                <Input
-                  type='password'
-                  name='password'
-                  id='password'
-                  placeholder='Password'
-                  autoComplete='off'
-                  minLength='6'
-                  required
-                  value={password}
-                  onChange={onChange}
-                />
-              )}
+              <Input
+                type='password'
+                name='password'
+                id='password'
+                placeholder='Password'
+                autoComplete='off'
+                minLength='6'
+                value={password}
+                onChange={onChange}
+                required
+              />
             </Wrapper>
 
             <Buttons>
-              {id && (
-                <Button
-                  type='button'
-                  variant='red'
-                  onClick={() => archiveUser(id)}
-                >
-                  Archive User
-                </Button>
-              )}
-
               <Button type='submit' variant='blue'>
-                {id ? 'Edit User' : 'Add User'}
+                Add User
               </Button>
             </Buttons>
           </Grid>

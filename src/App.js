@@ -8,7 +8,8 @@ import Login from './components/auth/Login';
 import Post from './components/post/Post';
 import Posts from './components/posts/Posts';
 import Users from './components/users/Users';
-import UserForm from './components/user-form/UserForm';
+import AddUser from './components/user-forms/AddUser';
+import EditUser from './components/user-forms/EditUser';
 import PostForm from './components/post-form/PostForm';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Navbar from './components/navbar/Navbar';
@@ -38,8 +39,8 @@ export default function App() {
         <PrivateRoute exact path='/edit-post/:id' component={PostForm} />
         <PrivateRoute exact path='/create-post' component={PostForm} />
         <PrivateRoute exact path='/users' component={Users} />
-        <PrivateRoute exact path='/user/:id' component={UserForm} />
-        <PrivateRoute exact path='/create-user' component={UserForm} />
+        <PrivateRoute exact path='/user/:id' component={EditUser} />
+        <PrivateRoute exact path='/create-user' component={AddUser} />
         <Route exact path='/login' component={Login} />
       </Switch>
     </>

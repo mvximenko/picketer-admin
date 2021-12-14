@@ -12,13 +12,17 @@ const initialState = {
   },
   users: [],
   loading: true,
-  error: {},
+  error: null,
 };
 
 const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    getUsersStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
     getUsersSuccess: (state, action) => {
       state.users = action.payload;
       state.loading = false;
@@ -26,6 +30,10 @@ const user = createSlice({
     getUsersFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
+    },
+    getUserStart: (state) => {
+      state.loading = true;
+      state.error = null;
     },
     getUserSuccess: (state, action) => {
       state.user = action.payload;
@@ -45,8 +53,10 @@ const user = createSlice({
 });
 
 export const {
+  getUsersStart,
   getUsersSuccess,
   getUsersFailure,
+  getUserStart,
   getUserSuccess,
   getUserFailure,
   updateUser,
@@ -69,6 +79,7 @@ export const getUsers = (query) => async (dispatch) => {
 
 export const getUser = (id) => async (dispatch) => {
   try {
+    dispatch(getUserStart());
     const res = await api.get(`/users/user/${id}`);
     dispatch(getUserSuccess(res.data));
   } catch (err) {

@@ -59,7 +59,7 @@ export default function Users() {
     <Container>
       <Top>
         <Heading>Users</Heading>
-        <CreateLink to='/create-user'>Create New User</CreateLink>
+        <CreateLink to='/create-user'>Create User</CreateLink>
       </Top>
 
       <SearchPanel>
