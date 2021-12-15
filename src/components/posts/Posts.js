@@ -67,7 +67,7 @@ export default function Posts() {
     <Container>
       <Top>
         <Heading>Posts</Heading>
-        <CreateLink to='/create-post'>Create New Post</CreateLink>
+        <CreateLink to='/create-post'>Create Post</CreateLink>
       </Top>
 
       <SearchPanel>

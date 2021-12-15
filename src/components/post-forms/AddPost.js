@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
-import { getPost, resetPost, updatePost } from '../../redux/slices/postSlice';
+import { resetPost, updatePost } from '../../redux/slices/postSlice';
 import api from '../../utils/api';
 import {
   OuterContainer,
@@ -15,19 +14,16 @@ import {
   TextArea,
   Buttons,
   Button,
-} from './PostFormStyles';
+} from './styles';
 
-export default function PostForm() {
-  const { id } = useParams();
-  const history = useHistory();
+export default function AddPost() {
   const dispatch = useDispatch();
   const post = useSelector((state) => state.post.post, shallowEqual);
   const { title, location, picketer, description } = post;
 
   useEffect(() => {
-    if (id) dispatch(getPost(id));
     return () => dispatch(resetPost());
-  }, [id, dispatch]);
+  }, [dispatch]);
 
   const onChange = (e) => {
     dispatch(updatePost({ name: e.target.name, value: e.target.value }));
@@ -36,31 +32,9 @@ export default function PostForm() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-
-      const hasEmptyFields = [title, location, description].some(
-        (value) => value === ''
-      );
-
-      if (hasEmptyFields) {
-        toast.error('Please fill in all fields');
-      } else if (id) {
-        await api.put('/posts/post', post);
-        toast.success('Post updated');
-      } else {
-        await api.post('/posts', post);
-        toast.success('Post created');
-        dispatch(resetPost());
-      }
-    } catch (err) {
-      toast.error(err.toString());
-    }
-  };
-
-  const archivePost = async (id) => {
-    try {
-      await api.put(`/posts/archive/${id}`);
-      toast.success('Post archived');
-      history.push(`/`);
+      await api.post('/posts', post);
+      toast.success('Post created');
+      dispatch(resetPost());
     } catch (err) {
       toast.error(err.toString());
     }
@@ -70,7 +44,7 @@ export default function PostForm() {
     <OuterContainer>
       <InnerContainer>
         <Form onSubmit={handleSubmit}>
-          <Heading>{id ? 'Edit Post' : 'Add Post'}</Heading>
+          <Heading>Add Post</Heading>
 
           <Wrapper>
             <label htmlFor='title'>Title</label>
@@ -81,6 +55,7 @@ export default function PostForm() {
               placeholder='Title'
               value={title}
               onChange={onChange}
+              required
             />
           </Wrapper>
 
@@ -94,13 +69,14 @@ export default function PostForm() {
               placeholder='Location'
               value={location}
               onChange={onChange}
+              required
             />
           </Wrapper>
 
           <Wrapper>
             <label htmlFor='picketer'>Picketer Email</label>
             <Input
-              type='text'
+              type='email'
               name='picketer'
               id='picketer'
               placeholder='Picketer Email'
@@ -118,22 +94,13 @@ export default function PostForm() {
               placeholder='Describe everything about this post here'
               value={description}
               onChange={onChange}
+              required
             />
           </Wrapper>
 
           <Buttons>
-            {id && (
-              <Button
-                type='button'
-                variant='red'
-                onClick={() => archivePost(id)}
-              >
-                Archive Post
-              </Button>
-            )}
-
             <Button type='submit' variant='blue'>
-              {id ? 'Edit Post' : 'Add Post'}
+              Add Post
             </Button>
           </Buttons>
         </Form>

@@ -2,21 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
 const initialState = {
-  posts: [],
   post: {
     title: '',
     location: '',
     picketer: '',
     description: '',
   },
+  posts: [],
   loading: true,
-  error: {},
+  error: null,
 };
 
 const post = createSlice({
   name: 'post',
   initialState,
   reducers: {
+    getPostsStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
     getPostsSuccess: (state, action) => {
       state.posts = action.payload;
       state.loading = false;
@@ -24,6 +28,10 @@ const post = createSlice({
     getPostsFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
+    },
+    getPostStart: (state) => {
+      state.loading = true;
+      state.error = null;
     },
     getPostSuccess: (state, action) => {
       state.post = action.payload;
@@ -43,8 +51,10 @@ const post = createSlice({
 });
 
 export const {
+  getPostsStart,
   getPostsSuccess,
   getPostsFailure,
+  getPostStart,
   getPostSuccess,
   getPostFailure,
   updatePost,
@@ -67,6 +77,7 @@ export const getPosts = (query) => async (dispatch) => {
 
 export const getPost = (id) => async (dispatch) => {
   try {
+    dispatch(getPostStart());
     const res = await api.get(`/posts/${id}`);
     dispatch(getPostSuccess(res.data));
   } catch (err) {
