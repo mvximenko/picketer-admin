@@ -9,7 +9,7 @@ export const ListItem = styled.li`
   ${tw`
     flex items-center space-x-4 my-3 p-3
     border border-gray-300 shadow-md rounded-md
-    bg-white
+    bg-white cursor-pointer
   `}
 `;
 

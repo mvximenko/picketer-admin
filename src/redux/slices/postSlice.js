@@ -29,16 +29,8 @@ const post = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    getPostStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
     getPostSuccess: (state, action) => {
       state.post = action.payload;
-      state.loading = false;
-    },
-    getPostFailure: (state, action) => {
-      state.error = action.payload;
       state.loading = false;
     },
     updatePost: (state, action) => {
@@ -54,9 +46,7 @@ export const {
   getPostsStart,
   getPostsSuccess,
   getPostsFailure,
-  getPostStart,
   getPostSuccess,
-  getPostFailure,
   updatePost,
   resetPost,
 } = post.actions;
@@ -77,12 +67,12 @@ export const getPosts = (query) => async (dispatch) => {
 
 export const getPost = (id) => async (dispatch) => {
   try {
-    dispatch(getPostStart());
+    dispatch(getPostsStart());
     const res = await api.get(`/posts/${id}`);
     dispatch(getPostSuccess(res.data));
   } catch (err) {
     dispatch(
-      getPostFailure({
+      getPostsFailure({
         msg: err.response.statusText,
         status: err.response.status,
       })

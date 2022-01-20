@@ -31,16 +31,8 @@ const user = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    getUserStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
     getUserSuccess: (state, action) => {
       state.user = action.payload;
-      state.loading = false;
-    },
-    getUserFailure: (state, action) => {
-      state.error = action.payload;
       state.loading = false;
     },
     updateUser: (state, action) => {
@@ -56,9 +48,7 @@ export const {
   getUsersStart,
   getUsersSuccess,
   getUsersFailure,
-  getUserStart,
   getUserSuccess,
-  getUserFailure,
   updateUser,
   resetUser,
 } = user.actions;
@@ -79,12 +69,12 @@ export const getUsers = (query) => async (dispatch) => {
 
 export const getUser = (id) => async (dispatch) => {
   try {
-    dispatch(getUserStart());
+    dispatch(getUsersStart());
     const res = await api.get(`/users/user/${id}`);
     dispatch(getUserSuccess(res.data));
   } catch (err) {
     dispatch(
-      getUserFailure({
+      getUsersFailure({
         msg: err.response.statusText,
         status: err.response.status,
       })

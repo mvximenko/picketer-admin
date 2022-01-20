@@ -3,6 +3,8 @@ import DatePicker from 'react-datepicker';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getPosts } from '../../redux/slices/postSlice';
+import useMediaQuery from '../../hooks/useMediaQuery';
+import Post from './Post';
 import Row from './Row';
 import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
@@ -34,6 +36,7 @@ export default function Posts() {
   const [value, setValue] = useState('');
   const [date, setDate] = useState('');
   const [archive, setArchive] = useState(false);
+  const matches = useMediaQuery('(min-width: 600px)');
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -117,27 +120,35 @@ export default function Posts() {
         )}
       </SearchPanel>
 
-      <OuterContainer>
-        <InnerContainer>
-          <Table>
-            <thead>
-              <tr>
-                <TH>Title</TH>
-                <TH>Location</TH>
-                <TH>Date</TH>
-                <TH>Picketer</TH>
-                <TH>Actions</TH>
-              </tr>
-            </thead>
+      {matches ? (
+        <OuterContainer>
+          <InnerContainer>
+            <Table>
+              <thead>
+                <tr>
+                  <TH>Title</TH>
+                  <TH>Location</TH>
+                  <TH>Date</TH>
+                  <TH>Picketer</TH>
+                  <TH>Actions</TH>
+                </tr>
+              </thead>
 
-            <tbody>
-              {posts.map((post) => (
-                <Row post={post} archive={archive} key={post._id} />
-              ))}
-            </tbody>
-          </Table>
-        </InnerContainer>
-      </OuterContainer>
+              <tbody>
+                {posts.map((post) => (
+                  <Row post={post} key={post._id} />
+                ))}
+              </tbody>
+            </Table>
+          </InnerContainer>
+        </OuterContainer>
+      ) : (
+        <>
+          {posts.map((post) => (
+            <Post post={post} archive={archive} key={post._id} />
+          ))}
+        </>
+      )}
     </Container>
   );
 }

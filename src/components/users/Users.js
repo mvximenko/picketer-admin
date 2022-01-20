@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
 import { getUsers } from '../../redux/slices/userSlice';
@@ -118,15 +117,7 @@ export default function Users() {
         ) : (
           <ul>
             {users.map((user) => (
-              <>
-                {!archive ? (
-                  <Link to={`/user/${user._id}`}>
-                    <Post user={user} key={user._id} />
-                  </Link>
-                ) : (
-                  <Post user={user} key={user._id} />
-                )}
-              </>
+              <Post user={user} archive={archive} key={user._id} />
             ))}
           </ul>
         )}
