@@ -12,6 +12,8 @@ import AddUser from './components/user-forms/AddUser';
 import EditUser from './components/user-forms/EditUser';
 import AddPost from './components/post-forms/AddPost';
 import EditPost from './components/post-forms/EditPost';
+import Reports from './components/reports/Reports';
+import Report from './components/reports/Report';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Navbar from './components/navbar/Navbar';
 import setAuthToken from './utils/setAuthToken';
@@ -42,6 +44,8 @@ export default function App() {
         <PrivateRoute exact path='/users' component={Users} />
         <PrivateRoute exact path='/user/:id' component={EditUser} />
         <PrivateRoute exact path='/create-user' component={AddUser} />
+        <PrivateRoute exact path='/reports' component={Reports} />
+        <PrivateRoute exact path='/report/:id' component={Report} />
         <Route exact path='/login' component={Login} />
       </Switch>
     </>

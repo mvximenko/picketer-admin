@@ -27,6 +27,7 @@ export default function Navbar() {
       </Div>
 
       <Nav open={open} onClick={() => setOpen(false)}>
+        <StyledLink to='/reports'>Reports</StyledLink>
         <StyledLink to='/'>Posts</StyledLink>
         <StyledLink to='/users'>Users</StyledLink>
         <StyledLink to='/' onClick={() => dispatch(logout())}>
