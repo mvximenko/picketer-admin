@@ -46,8 +46,23 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
+export const Wrapper = styled.div`
+  ${tw`py-2`}
+`;
+
+export const Input = styled.input`
+  ${tw`h-10 border mt-1 rounded px-4 w-full bg-gray-50 outline-none`}
+`;
+
+export const TextArea = styled.textarea`
+  ${tw`
+    bg-gray-100 p-3 h-52 border border-gray-300 outline-none
+    border mt-1 rounded px-4 w-full bg-gray-50
+  `}
+`;
+
 export const Buttons = styled.div`
-  ${tw`flex justify-between pb-4`}
+  ${tw`flex justify-between pb-4 pt-6`}
 
   button + button {
     ${tw`ml-2`}

@@ -5,6 +5,9 @@ const initialState = {
   report: {
     title: '',
     picketer: '',
+    text: '',
+    subject: '',
+    to: '',
   },
   reports: [],
   loading: true,

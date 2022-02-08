@@ -136,7 +136,7 @@ export default function Posts() {
 
               <tbody>
                 {posts.map((post) => (
-                  <Row post={post} key={post._id} />
+                  <Row post={post} archive={archive} key={post._id} />
                 ))}
               </tbody>
             </Table>
