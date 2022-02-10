@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import api from '../../utils/api';
+import { subscribeUserToPush } from '../../serviceWorkerRegistration';
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -49,6 +50,11 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth');
     dispatch(getUserSuccess(res.data));
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.ready.then((registration) => {
+        subscribeUserToPush(registration, res.data._id);
+      });
+    }
   } catch (err) {
     dispatch(loginFailure());
   }

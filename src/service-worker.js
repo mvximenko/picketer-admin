@@ -74,7 +74,8 @@ self.addEventListener('push', (event) => {
   const data = event.data.json();
   self.registration.showNotification(data.title, {
     body: 'Picketer',
-    icon: 'https://raw.githubusercontent.com/mvximenko/youdo/master/public/logo192.png',
+    icon:
+      'https://raw.githubusercontent.com/mvximenko/youdo/master/public/logo192.png',
     vibrate: [100, 50, 100],
     data: {
       primaryKey: data.primaryKey,
@@ -90,7 +91,7 @@ self.addEventListener('notificationclick', (event) => {
   if (action === 'close') {
     notification.close();
   } else {
-    clients.openWindow(`https://www.google.com/search?q=${primaryKey}`);
+    clients.openWindow(`https://picketer.netlify.app/${primaryKey}`);
     notification.close();
   }
 });

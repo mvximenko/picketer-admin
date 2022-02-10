@@ -87,8 +87,25 @@ export default function Report() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      await api.put('/report/send-report', { subject, text, to, images });
+      await api.put('/report/send-report', {
+        title,
+        subject,
+        text,
+        to,
+        images,
+        picketer,
+      });
       toast.success('Done');
+    } catch (err) {
+      toast.error(err.toString());
+    }
+  };
+
+  const handleReject = async (e) => {
+    try {
+      e.preventDefault();
+      await api.put('/report/reject-report', { title, picketer });
+      toast.success('Rejected');
     } catch (err) {
       toast.error(err.toString());
     }
@@ -169,7 +186,7 @@ export default function Report() {
                 Delete
               </Button>
 
-              <Button type='submit' variant='yellow'>
+              <Button onClick={handleReject} type='button' variant='yellow'>
                 Reject
               </Button>
             </div>

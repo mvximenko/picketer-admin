@@ -11,6 +11,7 @@
 // opt-in, read https://cra.link/PWA
 
 import urlBase64ToUint8Array from './utils/urlBase64ToUint8Array';
+import api from './utils/api';
 
 const publicVapidKey =
   'BBBNRHL4eUQrGnwjCNxsN_8QJSVc4Ql4ClW-aKyDs_l9NIYAU1LwNtZOoAKwIJxLmrA1UtguUnwz8A2ucohkMdQ';
@@ -21,8 +22,8 @@ const isLocalhost = Boolean(
     window.location.hostname === '[::1]' ||
     // 127.0.0.0/8 are considered localhost for IPv4.
     window.location.hostname.match(
-      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
-    ),
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    )
 );
 
 export function register(config) {
@@ -48,7 +49,7 @@ export function register(config) {
         navigator.serviceWorker.ready.then(() => {
           console.log(
             'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://cra.link/PWA',
+              'worker. To learn more, visit https://cra.link/PWA'
           );
         });
       } else {
@@ -76,7 +77,7 @@ function registerValidSW(swUrl, config) {
               // content until all client tabs are closed.
               console.log(
                 'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See https://cra.link/PWA.',
+                  'tabs for this page are closed. See https://cra.link/PWA.'
               );
 
               // Execute callback
@@ -97,9 +98,6 @@ function registerValidSW(swUrl, config) {
           }
         };
       };
-      navigator.serviceWorker.ready.then((registration) => {
-        subscribeUserToPush(registration);
-      });
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
@@ -131,24 +129,20 @@ function checkValidServiceWorker(swUrl, config) {
     })
     .catch(() => {
       console.log(
-        'No internet connection found. App is running in offline mode.',
+        'No internet connection found. App is running in offline mode.'
       );
     });
 }
 
-async function subscribeUserToPush(registration) {
+export async function subscribeUserToPush(registration, id) {
   try {
     let subscription = await registration.pushManager.getSubscription();
     if (subscription === null) {
-      const subscription = await registration.pushManager.subscribe({
+      let subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
       });
-      await fetch('http://localhost:5000/api/subscribe', {
-        method: 'POST',
-        body: JSON.stringify(subscription),
-        headers: { 'content-type': 'application/json' },
-      });
+      await api.put('/users/subscribe', { subscription, id });
     } else {
       console.log(subscription, 'User is already subscribed');
     }
