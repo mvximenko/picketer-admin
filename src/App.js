@@ -10,6 +10,8 @@ import Posts from './components/posts/Posts';
 import Users from './components/users/Users';
 import AddUser from './components/user-forms/AddUser';
 import EditUser from './components/user-forms/EditUser';
+import InviteUser from './components/user-forms/InviteUser';
+import RegisterUser from './components/user-forms/RegisterUser';
 import AddPost from './components/post-forms/AddPost';
 import EditPost from './components/post-forms/EditPost';
 import Reports from './components/reports/Reports';
@@ -44,8 +46,10 @@ export default function App() {
         <PrivateRoute exact path='/users' component={Users} />
         <PrivateRoute exact path='/user/:id' component={EditUser} />
         <PrivateRoute exact path='/create-user' component={AddUser} />
+        <PrivateRoute exact path='/invite-user' component={InviteUser} />
         <PrivateRoute exact path='/reports' component={Reports} />
         <PrivateRoute exact path='/report/:id' component={Report} />
+        <Route exact path='/invite/:id' component={RegisterUser} />
         <Route exact path='/login' component={Login} />
       </Switch>
     </>

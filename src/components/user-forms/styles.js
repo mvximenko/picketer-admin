@@ -3,6 +3,7 @@ import tw, { styled, css } from 'twin.macro';
 const containerVariants = {
   red: tw`bg-red-500 hover:bg-red-600`,
   blue: tw`bg-blue-500 hover:bg-blue-600`,
+  green: tw`bg-green-500 hover:bg-green-600`,
 };
 
 const input = css`

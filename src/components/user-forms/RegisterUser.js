@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, shallowEqual } from 'react-redux';
 import { useSelector } from '../../redux/store';
@@ -13,16 +13,15 @@ import {
   Grid,
   Wrapper,
   Input,
-  Select,
   Buttons,
   Button,
 } from './styles';
 
-export default function AddUser() {
+export default function RegusterUser() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const { id } = useParams();
   const { user } = useSelector((state) => state.user, shallowEqual);
-  const { name, surname, patronymic, email, role, password } = user;
+  const { name, surname, patronymic, email, password } = user;
 
   useEffect(() => {
     return () => dispatch(resetUser());
@@ -35,7 +34,14 @@ export default function AddUser() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      await api.post('/users', user);
+      await api.post(`invite/register/${id}`, {
+        name,
+        surname,
+        patronymic,
+        email,
+        password,
+      });
+
       toast.success('User created');
       dispatch(resetUser());
     } catch (err) {
@@ -47,7 +53,7 @@ export default function AddUser() {
     <OuterContainer>
       <InnerContainer>
         <Form onSubmit={handleSubmit}>
-          <Heading>Add User</Heading>
+          <Heading>Register User</Heading>
 
           <Grid>
             <Wrapper>
@@ -103,22 +109,6 @@ export default function AddUser() {
             </Wrapper>
 
             <Wrapper>
-              <label htmlFor='role'>Role</label>
-              <Select
-                name='role'
-                id='role'
-                placeholder='role'
-                value={role}
-                onChange={onChange}
-                required
-              >
-                <option value=''>Select the role</option>
-                <option value='user'>User</option>
-                <option value='admin'>Admin</option>
-              </Select>
-            </Wrapper>
-
-            <Wrapper>
               <label htmlFor='password'>Password</label>
               <Input
                 type='password'
@@ -134,16 +124,8 @@ export default function AddUser() {
             </Wrapper>
 
             <Buttons>
-              <Button
-                type='button'
-                variant='green'
-                onClick={() => history.push('/invite-user')}
-              >
-                Invite User
-              </Button>
-
               <Button type='submit' variant='blue'>
-                Add User
+                Register
               </Button>
             </Buttons>
           </Grid>
