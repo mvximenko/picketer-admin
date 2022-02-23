@@ -10,6 +10,8 @@ import {
   Card,
   Title,
   Picketer,
+  Wrapper,
+  Status,
 } from './ReportsStyles';
 
 export default function Reports() {
@@ -34,7 +36,13 @@ export default function Reports() {
       {reports.map((report) => (
         <Card key={report._id} onClick={(e) => handleClick(e, report._id)}>
           <Title>{report.title}</Title>
-          <Picketer>Picketer: {report.picketer}</Picketer>
+
+          <Wrapper>
+            <Picketer>Picketer: {report.picketer}</Picketer>
+            <Status variant={report.status.toLowerCase()}>
+              {report.status}
+            </Status>
+          </Wrapper>
         </Card>
       ))}
     </Container>
